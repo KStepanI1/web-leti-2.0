@@ -1,0 +1,11 @@
+{
+  "short_name": "Web Leti",
+  "name": "Web Leti 2.0",
+  "icons": [
+   
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
