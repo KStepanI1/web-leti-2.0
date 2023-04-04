@@ -4,17 +4,14 @@ import config from "./utils/config";
 import { db } from "./db/_index";
 import defineModels from "./models/_index";
 import cors from "cors";
+import router from "./routers/_index";
+import ErrorHandlerMiddleware from "./middleware/ErrorHandlerMiddleware";
 
 dotenv.config();
 
 const { PORT } = config;
 
 const app = express();
-
-function cofigurateApp() {
-  app.use(cors());
-  app.use(express.json());
-}
 
 function appErrorCallback() {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
@@ -29,7 +26,10 @@ async function startDb() {
 async function start() {
   try {
     await startDb();
-    cofigurateApp();
+    app.use(cors());
+    app.use(express.json());
+    app.use("/api", router);
+    // app.use(ErrorHandlerMiddleware);
     app.listen(PORT, appErrorCallback);
   } catch (err) {
     console.log("ERROR: ", err);

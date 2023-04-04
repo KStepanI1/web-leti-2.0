@@ -1,6 +1,3 @@
-// import { db } from "../db/_index";
-// import { DataTypes } from 'sequelize';
-
 import { User } from "./User";
 import { Lesson } from "./Lesson";
 import { Gap } from "./Gap";
@@ -9,22 +6,26 @@ import { Timetable } from "./Timetable";
 import { Teacher } from "./Teacher";
 import { Role } from "./Role";
 import { LessonNumber } from "./LessonNumber";
+import { Token } from "./Token";
 
-Gap.hasOne(LessonNumber);
-LessonNumber.belongsTo(Gap);
+Gap.belongsTo(LessonNumber);
+LessonNumber.hasOne(Gap);
 
-Role.hasMany(User);
-User.belongsTo(Role);
+Role.belongsTo(User);
+User.hasMany(Role);
 
-Teacher.hasMany(Lesson);
-Lesson.belongsTo(Teacher);
+Teacher.belongsTo(Lesson);
+Lesson.hasMany(Teacher);
 
-Timetable.hasOne(Weekday);
-Timetable.hasOne(Lesson);
-Timetable.hasOne(Gap);
-Gap.belongsTo(Timetable);
-Lesson.belongsTo(Timetable);
-Weekday.belongsTo(Timetable);
+Timetable.belongsTo(Weekday);
+Timetable.belongsTo(Lesson);
+Timetable.belongsTo(Gap);
+Gap.hasOne(Timetable);
+Lesson.hasOne(Timetable);
+Weekday.hasOne(Timetable);
+
+Token.belongsTo(User);
+User.hasOne(Token);
 
 export default {
   User,

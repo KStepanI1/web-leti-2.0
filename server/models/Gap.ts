@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
 import { db } from "../db/_index";
 
-const Gap = db.define("gaps", {
+const Gap = db.define("gap", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  starttime: { type: DataTypes.TIME },
-  endtime: { type: DataTypes.TIME },
+  startTime: { type: DataTypes.TIME },
+  endTime: { type: DataTypes.TIME },
 });
 
 export { Gap };
