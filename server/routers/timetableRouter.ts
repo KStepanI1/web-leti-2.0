@@ -5,6 +5,6 @@ const router = Router();
 
 router.post("/", timetableController.create);
 router.get("/", timetableController.getAll);
-router.get("/:id", timetableController.get);
+router.get("/:id", timetableController.getOne);
 
 export default router;

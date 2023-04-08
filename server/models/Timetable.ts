@@ -7,6 +7,9 @@ export type TimetableType = {
   id?: number;
   audienceNumber: number;
   isRemotely?: boolean;
+  lessonId?: number;
+  weekdayId?: number;
+  gapId?: number;
 };
 
 const Timetable = db.define<TimetableModelType>("timetable", {

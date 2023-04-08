@@ -16,8 +16,8 @@ class ApiError extends Error {
     return new ApiError(404, message);
   }
 
-  static internal(message: string) {
-    return new ApiError(500, message);
+  static internal(message?: string) {
+    return new ApiError(500, message || "На сервере произошла ошибка");
   }
 
   static forbidden(message: string) {

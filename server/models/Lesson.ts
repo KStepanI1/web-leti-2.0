@@ -2,7 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import { db } from "../db/_index";
 
 export type LessonType = {
-  id: number;
+  id?: number;
   name: string;
 };
 

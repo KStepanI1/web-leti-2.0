@@ -10,19 +10,15 @@ import { Gap } from "../models/Gap";
 import { Lesson } from "../models/Lesson";
 import { IncludeOptions } from "sequelize";
 
+const INCLUDE: { include: IncludeOptions[] } = {
+  include: [
+    { model: Weekday, as: "weekday" },
+    { model: Gap, as: "gap" },
+    { model: Lesson, as: "lesson" },
+  ],
+};
+
 class TimetableController {
-  include: { include: IncludeOptions[] };
-
-  constructor() {
-    this.include = {
-      include: [
-        { model: Weekday, as: "weekday" },
-        { model: Gap, as: "gap" },
-        { model: Lesson, as: "lesson" },
-      ],
-    };
-  }
-
   async create(
     req: CreateRequestType,
     res: CreateResponseType,
@@ -43,11 +39,11 @@ class TimetableController {
         lessonId,
         weekdayId,
         gapId,
-      } as any);
+      });
 
-      return res.json(timetable);
+      return res.status(201).json(timetable);
     } catch (err) {
-      next(err);
+      next(ApiError.internal());
     }
   }
 
@@ -59,41 +55,47 @@ class TimetableController {
     if (audienceNumber && isRemotely) {
       timetable = await Timetable.findAll({
         where: { audienceNumber, isRemotely },
-        ...this.include,
+        ...INCLUDE,
       });
     } else if (audienceNumber) {
       timetable = await Timetable.findAll({
         where: { audienceNumber },
-        ...this.include,
+        ...INCLUDE,
       });
     } else if (isRemotely) {
       timetable = await Timetable.findAll({
         where: { isRemotely },
-        ...this.include,
+        ...INCLUDE,
       });
     }
 
-    timetable = await Timetable.findAll({ ...this.include });
-    return res.json(timetable);
+    timetable = await Timetable.findAll({
+      ...INCLUDE,
+    });
+    return res.status(200).json(timetable);
   }
 
-  async get(
+  async getOne(
     req: GetRequestType,
     res: GetResponseType,
     next: express.NextFunction
   ) {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    const timetable = await Timetable.findOne({
-      where: { id },
-      ...this.include,
-    });
+      const timetable = await Timetable.findOne({
+        where: { id },
+        ...INCLUDE,
+      });
 
-    if (!timetable) {
-      next(ApiError.notFound("Расписание с указаным id не найдено"));
+      if (!timetable) {
+        next(ApiError.notFound("Расписание с указаным id не найдено"));
+      }
+
+      return res.status(200).json(timetable);
+    } catch (err) {
+      next(ApiError.internal());
     }
-
-    return res.json(timetable);
   }
 }
 

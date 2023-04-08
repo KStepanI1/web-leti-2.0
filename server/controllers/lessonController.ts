@@ -9,19 +9,50 @@ class LessonController {
     next: express.NextFunction
   ) {
     try {
-      const body = req.body;
+      const { name } = req.body;
 
-      const lesson = await Lesson.create(body);
+      if (!name) {
+        next(ApiError.badRequest('Поле "name" не может быть пустым'));
+      }
 
-      return res.json(lesson);
+      const lesson = await Lesson.create({ name });
+
+      return res.status(201).json(lesson);
     } catch (err) {
-      //   next(ApiError.badRequest("Не удалось создать предмет"));
-      console.log(err);
+      next(ApiError.internal());
     }
+  }
+
+  async getOne(
+    req: GetOneRequestType,
+    res: GetOneResponseType,
+    next: express.NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+
+      const lesson = await Lesson.findOne({ where: { id } });
+
+      return res.status(200).json(lesson);
+    } catch (err) {
+      next(ApiError.internal());
+    }
+  }
+
+  async getAll(req: GetAllRequestType, res: GetAllResponseType) {
+    const lessons = await Lesson.findAll();
+
+    return res.status(200).json(lessons);
   }
 }
 
 type CreateRequestType = express.Request<null, LessonModelType, LessonType>;
 type CreateResponseType = express.Response<LessonModelType>;
+
+type GetOneRequestType = express.Request<{ id: number }>;
+type GetOneResponseType = express.Response<LessonModelType | null>;
+
+type GetAllRequestType = express.Request<null, LessonModelType[]>;
+type GetAllResponseType = express.Response<LessonModelType[]>;
 
 export default new LessonController();
