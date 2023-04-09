@@ -1,0 +1,11 @@
+.navigation {
+  position: fixed;
+  top: var(--header-height);
+  padding: 1.5rem 2rem 1.5rem 1.5rem;
+  width: var(--nav-width);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--nav-bg);
+}

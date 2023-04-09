@@ -14,7 +14,7 @@ export type TimetableType = {
 
 const Timetable = db.define<TimetableModelType>("timetable", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  audienceNumber: { type: DataTypes.INTEGER },
+  audienceNumber: { type: DataTypes.INTEGER, allowNull: true },
   isRemotely: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 

@@ -1,5 +1,5 @@
-import Home from "./components/pages/Home";
-import Timetable from "./components/pages/Timetable";
+import Home from "./pages/Home";
+import Timetable from "./pages/Timetable";
 import { ROUTERS } from "./utils/constants";
 
 type RouterType = {
@@ -8,18 +8,17 @@ type RouterType = {
   index?: boolean;
 };
 
-const AUTH_ROUTERS: RouterType[] = [
-  {
-    path: ROUTERS.PATH_TIMETABLE,
-    Component: Timetable,
-  },
-];
+const AUTH_ROUTERS: RouterType[] = [];
 
 const PUBLIC_ROUTERS: RouterType[] = [
   {
     path: ROUTERS.PATH_HOME,
     Component: Home,
     index: true,
+  },
+  {
+    path: ROUTERS.PATH_TIMETABLE,
+    Component: Timetable,
   },
 ];
 

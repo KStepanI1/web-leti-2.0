@@ -1,9 +1,10 @@
 import { Navigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import { ROUTERS } from "../utils/constants";
+import { StoreContext } from "..";
+import { useContext } from "react";
 
 function RequireAdmin({ children }: { children: JSX.Element }) {
-  const auth = useAuth();
+  const { auth } = useContext(StoreContext);
 
   if (!auth.isAdmin || !auth.isSuper) {
     return <Navigate to={ROUTERS.PATH_HOME} replace />;

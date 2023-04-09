@@ -1,0 +1,7 @@
+.layout {
+  &__outlet {
+    width: calc(var(--content-max-width) - var(--nav-width));
+    padding: 1.5rem 3rem;
+    margin-left: var(--nav-width);
+  }
+}

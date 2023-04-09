@@ -1,13 +1,14 @@
-import "./App.css";
+import "normalize.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ROUTERS } from "../utils/constants";
 
-import Layout from "../components/pages/Layout";
+import Layout from "../pages/Layout";
 import { useMemo } from "react";
 import { AUTH_ROUTERS, PUBLIC_ROUTERS } from "../roters";
 import { RequireAdmin } from "./RequireAdmin";
+import { observer } from "mobx-react-lite";
 
 function App() {
   const PUBLIC = useMemo(() => {
@@ -49,4 +50,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);

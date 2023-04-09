@@ -8,7 +8,7 @@ import router from "./routers/_index";
 
 dotenv.config();
 
-const { PORT } = config;
+const { PORT, CLIENT_HOST, CLIENT_PORT, CLIENT_PROTOCOL } = config;
 
 const app = express();
 
@@ -25,7 +25,12 @@ async function startDb() {
 async function start() {
   try {
     await startDb();
-    app.use(cors());
+    app.use(
+      cors({
+        credentials: true,
+        origin: `${CLIENT_PROTOCOL}://${CLIENT_HOST}:${CLIENT_PORT}`,
+      })
+    );
     app.use(express.json());
     app.use("/api", router);
     // app.use(ErrorHandlerMiddleware);

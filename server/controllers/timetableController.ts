@@ -47,31 +47,24 @@ class TimetableController {
     }
   }
 
-  async getAll(req: GetAllRequestType, res: GetALlResponseType) {
-    const { audienceNumber, isRemotely } = req.params;
+  async getAll(req: GetAllRequestType, res: GetAllResponseType) {
+    const { weekdayId } = req.query;
+
+    console.log(weekdayId);
 
     let timetable: TimetableModelType[];
 
-    if (audienceNumber && isRemotely) {
+    if (weekdayId) {
       timetable = await Timetable.findAll({
-        where: { audienceNumber, isRemotely },
+        where: { weekdayId },
         ...INCLUDE,
       });
-    } else if (audienceNumber) {
+    } else {
       timetable = await Timetable.findAll({
-        where: { audienceNumber },
-        ...INCLUDE,
-      });
-    } else if (isRemotely) {
-      timetable = await Timetable.findAll({
-        where: { isRemotely },
         ...INCLUDE,
       });
     }
 
-    timetable = await Timetable.findAll({
-      ...INCLUDE,
-    });
     return res.status(200).json(timetable);
   }
 
@@ -82,6 +75,10 @@ class TimetableController {
   ) {
     try {
       const { id } = req.params;
+
+      if (!+id) {
+        next(ApiError.badRequest("Указанное id не является числом"));
+      }
 
       const timetable = await Timetable.findOne({
         where: { id },
@@ -97,11 +94,33 @@ class TimetableController {
       next(ApiError.internal());
     }
   }
+
+  async getAllByWeeks(
+    req: GetAllByWeeksRequestType,
+    res: GetAllByWeeksResponseType,
+    next: express.NextFunction
+  ) {
+    try {
+      const timetables = await Timetable.findAll({ ...INCLUDE });
+      const weekdays = await Weekday.findAll();
+
+      const resArray = weekdays.map((weekday) => ({
+        weekName: weekday.dataValues.name,
+        timetables: timetables?.filter(
+          (timetable) =>
+            timetable?.dataValues?.weekdayId === weekday.dataValues.id
+        ),
+      }));
+
+      return res.json(resArray);
+    } catch (err) {
+      next(ApiError.internal("Я пока не понимаю что не так"));
+    }
+  }
 }
 
 type GetRequestBody = {
-  audienceNumber?: number;
-  isRemotely?: boolean;
+  weekdayId?: number;
 };
 
 type CreateRequestBody = Omit<TimetableType, "id"> & {
@@ -117,8 +136,27 @@ type CreateRequestType = express.Request<
 >;
 type CreateResponseType = express.Response<TimetableModelType>;
 
-type GetAllRequestType = express.Request<GetRequestBody>;
-type GetALlResponseType = express.Response<TimetableModelType[]>;
+type GetAllByWeeksRequestType = express.Request<
+  null,
+  {
+    weekName: string;
+    timetables: TimetableModelType[];
+  }[]
+>;
+type GetAllByWeeksResponseType = express.Response<
+  {
+    weekName: string;
+    timetables: TimetableModelType[];
+  }[]
+>;
+
+type GetAllRequestType = express.Request<
+  GetRequestBody,
+  TimetableModelType[],
+  null,
+  GetRequestBody
+>;
+type GetAllResponseType = express.Response<TimetableModelType[]>;
 
 type GetRequestType = express.Request<{ id: number }>;
 type GetResponseType = express.Response<TimetableModelType | null>;

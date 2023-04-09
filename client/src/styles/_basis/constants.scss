@@ -1,0 +1,22 @@
+:root {
+  --box-shadow-color: rgba(0, 0, 0, 0.25);
+  --popup-background: rgba(0, 0, 0, 0.1);
+  --background-color: var(--white);
+  --black-text-color: var(--dark-blue);
+  --gray-text-color: var(--dark-gray);
+
+  --block-border: 1px solid var(--gray-20);
+
+  // APP
+  --content-max-width: 80rem;
+
+  // HEADER
+  --header-box-shadow: 4px 0px 20px var(--box-shadow-color);
+  --header-background: var(--white);
+  --header-border: var(--block-border);
+  --header-height: 5rem;
+
+  // NAVIGATION
+  --nav-width: 18rem;
+  --nav-bg: var(--white);
+}
