@@ -1,5 +1,5 @@
 import { IGap } from "./IGap";
-import { ILesson } from "./ILesson";
+import { ILessonExpanded } from "./ILesson";
 import { IWeekday } from "./IWeekday";
 
 export interface ITimetable {
@@ -9,15 +9,16 @@ export interface ITimetable {
   lessonId: number | null;
   weekdayId: number | null;
   gapId: number | null;
+  week: number;
 }
 
 export interface ITimetableExpanded extends ITimetable {
-  lesson?: ILesson;
+  lesson?: ILessonExpanded;
   weekday?: IWeekday;
   gap?: IGap;
 }
 
 export type ITimetableByWeeks = {
-  weekName: string;
+  weekday: IWeekday;
   timetables: ITimetableExpanded[];
 }[];

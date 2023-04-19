@@ -1,18 +1,22 @@
+import { NavLink, NavLinkProps } from "react-router-dom";
 
-import React from 'react'
-import { Link } from 'react-router-dom'
-
-type Props = {
-    path: string
-    name: string
+export interface NavItemProps extends NavLinkProps {
+  name: string;
 }
-// 
-function NavItem({ path, name }: Props) {
+//
+function NavItem({ name, ...props }: NavItemProps) {
   return (
-    <Link to={path} title={name}>
+    <li className="nav-item">
+      <NavLink
+        className={({ isActive }) =>
+          `nav-item__link${isActive ? " -active" : ""}`
+        }
+        {...props}
+      >
         {name}
-    </Link>
-  )
+      </NavLink>
+    </li>
+  );
 }
 
-export default NavItem
+export default NavItem;

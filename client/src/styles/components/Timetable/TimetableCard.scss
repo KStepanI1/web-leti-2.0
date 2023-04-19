@@ -1,0 +1,20 @@
+.timetable-card {
+  &__weekday {
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.5rem;
+
+    .hint {
+      color: var(--gray-text-color);
+    }
+  }
+
+  &__content {
+    background-color: var(--white);
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    padding: 0.5rem 1rem;
+  }
+}

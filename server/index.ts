@@ -1,12 +1,10 @@
 import express from "express";
-import dotenv from "dotenv";
 import config from "./utils/config";
 import { db } from "./db/_index";
-import { initDb } from "./models/_index";
+import { initDbDefaultValues, initDbConnections } from "./models/_index";
 import cors from "cors";
 import router from "./routers/_index";
-
-dotenv.config();
+import { WeekNumberService } from "./service/weekNumberService";
 
 const { PORT, CLIENT_HOST, CLIENT_PORT, CLIENT_PROTOCOL } = config;
 
@@ -17,14 +15,22 @@ function appErrorCallback() {
 }
 
 async function startDb() {
+  initDbConnections();
   await db.authenticate();
-  await db.sync();
-  initDb();
+  await db.sync({ alter: true });
+  initDbDefaultValues();
+}
+
+async function onServerStarting() {
+  const wn = new WeekNumberService();
+
+  wn.scheduleParsing();
 }
 
 async function start() {
   try {
     await startDb();
+
     app.use(
       cors({
         credentials: true,
@@ -35,6 +41,8 @@ async function start() {
     app.use("/api", router);
     // app.use(ErrorHandlerMiddleware);
     app.listen(PORT, appErrorCallback);
+
+    await onServerStarting();
   } catch (err) {
     console.log("ERROR: ", err);
   }

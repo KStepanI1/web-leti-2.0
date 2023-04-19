@@ -32,7 +32,7 @@ class TimetableApi extends Api {
     const filterParams = this.parseApiFilter(filter);
 
     return this.read({
-      path: `/timetable${filterParams || ""}`,
+      path: `/timetable${filterParams}`,
       onComplete,
       onError,
     });
@@ -41,9 +41,12 @@ class TimetableApi extends Api {
   async getAllByWeeks({
     onComplete,
     onError,
+    filter,
   }: TimetableApiByWeeksType): ApiResponse<ITimetableByWeeks> {
+    const filterParams = this.parseApiFilter(filter);
+
     return this.read({
-      path: `/timetable/byWeeks`,
+      path: `/timetable/byWeeks${filterParams}`,
       onComplete,
       onError,
     });
@@ -64,11 +67,12 @@ type TimetableApiCreateType = ApiWithoutPath<
 
 type TimetableApiByWeeksType = ApiWithoutPath<
   ApiPropperties<ITimetableByWeeks>
->;
+> & { filter?: { week: number } };
 
 type TimetableApiGetAllType = ApiWithoutPath<
   ApiPropperties<ITimetableExpanded[]>
 > & { filter?: { weekdayId: number } };
+
 type TimetableApiGetOneType = ApiWithoutPath<
   ApiPropperties<ITimetableExpanded>
 > & { id: number };

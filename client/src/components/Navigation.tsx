@@ -10,8 +10,8 @@ function Navigation() {
 
   return (
     <nav className={ClassName}>
-      <NavItem path={ROUTERS.PATH_HOME} name="Главная" />
-      <NavItem path={ROUTERS.PATH_TIMETABLE} name="Расписание" />
+      <NavItem to={ROUTERS.PATH_HOME} name="Главная" />
+      <NavItem to={ROUTERS.PATH_TIMETABLE} name="Расписание" />
     </nav>
   );
 }

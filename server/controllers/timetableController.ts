@@ -5,18 +5,32 @@ import {
   TimetableType,
 } from "../models/Timetable";
 import { ApiError } from "../error/ApiError";
-import { Weekday } from "../models/Weekday";
+import { Weekday, WeekdayModelType } from "../models/Weekday";
 import { Gap } from "../models/Gap";
 import { Lesson } from "../models/Lesson";
-import { IncludeOptions } from "sequelize";
+import { IncludeOptions, Order } from "sequelize";
+import { Teacher } from "../models/Teacher";
+import { LessonType } from "../models/LessonTypes";
 
 const INCLUDE: { include: IncludeOptions[] } = {
   include: [
     { model: Weekday, as: "weekday" },
     { model: Gap, as: "gap" },
-    { model: Lesson, as: "lesson" },
+    {
+      model: Lesson,
+      as: "lesson",
+      include: [
+        { model: Teacher, as: "teacher" },
+        {
+          model: LessonType,
+          as: "lessontype",
+        },
+      ],
+    },
   ],
 };
+
+const ORDER: { order: Order } = { order: [[Gap, "startTime"]] };
 
 class TimetableController {
   async create(
@@ -30,16 +44,23 @@ class TimetableController {
         lessonId,
         weekdayId,
         gapId,
+        week,
         isRemotely = false,
       } = req.body;
 
-      const timetable = await Timetable.create({
-        audienceNumber,
-        isRemotely,
-        lessonId,
-        weekdayId,
-        gapId,
-      });
+      const timetable = await Timetable.create(
+        {
+          audienceNumber,
+          isRemotely,
+          lessonId,
+          weekdayId,
+          gapId,
+          week,
+        },
+        {
+          ...INCLUDE,
+        }
+      );
 
       return res.status(201).json(timetable);
     } catch (err) {
@@ -50,18 +71,18 @@ class TimetableController {
   async getAll(req: GetAllRequestType, res: GetAllResponseType) {
     const { weekdayId } = req.query;
 
-    console.log(weekdayId);
-
     let timetable: TimetableModelType[];
 
     if (weekdayId) {
       timetable = await Timetable.findAll({
         where: { weekdayId },
         ...INCLUDE,
+        ...ORDER,
       });
     } else {
       timetable = await Timetable.findAll({
         ...INCLUDE,
+        ...ORDER,
       });
     }
 
@@ -101,11 +122,17 @@ class TimetableController {
     next: express.NextFunction
   ) {
     try {
-      const timetables = await Timetable.findAll({ ...INCLUDE });
+      const { week } = req.query;
+      const timetables = await Timetable.findAll({
+        where: week ? { week: [+week, 3] } : undefined,
+        ...INCLUDE,
+        ...ORDER,
+      });
+
       const weekdays = await Weekday.findAll();
 
       const resArray = weekdays.map((weekday) => ({
-        weekName: weekday.dataValues.name,
+        weekday: weekday,
         timetables: timetables?.filter(
           (timetable) =>
             timetable?.dataValues?.weekdayId === weekday.dataValues.id
@@ -114,7 +141,7 @@ class TimetableController {
 
       return res.json(resArray);
     } catch (err) {
-      next(ApiError.internal("Я пока не понимаю что не так"));
+      next(ApiError.internal());
     }
   }
 }
@@ -139,13 +166,15 @@ type CreateResponseType = express.Response<TimetableModelType>;
 type GetAllByWeeksRequestType = express.Request<
   null,
   {
-    weekName: string;
+    weekday: WeekdayModelType;
     timetables: TimetableModelType[];
-  }[]
+  }[],
+  null,
+  { week: number }
 >;
 type GetAllByWeeksResponseType = express.Response<
   {
-    weekName: string;
+    weekday: WeekdayModelType;
     timetables: TimetableModelType[];
   }[]
 >;

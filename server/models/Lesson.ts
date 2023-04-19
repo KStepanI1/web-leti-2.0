@@ -4,6 +4,8 @@ import { db } from "../db/_index";
 export type LessonType = {
   id?: number;
   name: string;
+  lessontypeId?: number;
+  teacherId?: number;
 };
 
 export type LessonModelType = Model<LessonType>;

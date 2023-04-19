@@ -1,0 +1,14 @@
+.lesson-type {
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 0.1em 0.3em;
+  font-size: 0.7rem;
+
+  &.lec-type {
+    background-color: var(--lec-bg);
+  }
+
+  .prac-type {
+    background-color: #000000;
+  }
+}

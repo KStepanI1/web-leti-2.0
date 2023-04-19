@@ -1,0 +1,21 @@
+.t-item-lesson {
+  flex-grow: 1;
+  max-width: 100%;
+  padding: 0.2em 0.5em;
+
+  &__name-box {
+    display: flex;
+    column-gap: 0.75rem;
+    row-gap: 0.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  //   &__name {
+  //   }
+
+  &__info {
+    font-size: 0.9rem;
+  }
+}

@@ -9,16 +9,17 @@ class LessonController {
     next: express.NextFunction
   ) {
     try {
-      const { name } = req.body;
+      const { name, lessontypeId, teacherId } = req.body;
 
       if (!name) {
         next(ApiError.badRequest('Поле "name" не может быть пустым'));
       }
 
-      const lesson = await Lesson.create({ name });
+      const lesson = await Lesson.create({ name, lessontypeId, teacherId });
 
       return res.status(201).json(lesson);
     } catch (err) {
+      console.log(err);
       next(ApiError.internal());
     }
   }

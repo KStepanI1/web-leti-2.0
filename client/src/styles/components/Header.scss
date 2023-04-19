@@ -4,4 +4,6 @@
   display: flex;
   align-items: center;
   min-width: 100%;
+  background-color: var(--header-bg);
+  box-shadow: var(--header-bsh);
 }

@@ -1,4 +1,7 @@
+import dotenv from "dotenv";
 const DEFAULT_PORT = 5000;
+
+dotenv.config();
 
 export default {
   JWT_SECRET_ACCESS: process.env.JWT_ACCESS_SECRET,

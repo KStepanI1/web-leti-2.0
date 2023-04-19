@@ -32,7 +32,7 @@ class Api {
   }
 
   parseApiFilter(filter?: ApiFilter) {
-    let filterParams: string | null = null;
+    let filterParams = "";
 
     if (filter) {
       filterParams = "?";
