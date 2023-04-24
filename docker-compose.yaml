@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.1-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 10s
+    env_file:
+      - ./.env
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+       - postgres:/data/postgres
+    networks:
+      - app-network
+  
+  front-end:
+    container_name: front-end
+    restart: always
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+  
+  back-end:
+    container_name: back-end
+    restart: always
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    env_file:
+      - ./.env
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://postgres:5432"]
+    #   interval: 20s
+    #   timeout: 10s
+    #   retries: 5
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+      
+
+networks:
+  app-network:
+    
+
+volumes:
+    postgres:
+      driver: local

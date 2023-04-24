@@ -3,6 +3,7 @@ import { Settings } from "../models/Settings";
 
 class WeekNumberService {
   async scheduleParsing() {
+
     const scheduleCallback = async () => {
       try {
         const settings = await Settings.findOne({ where: { id: 1 } });

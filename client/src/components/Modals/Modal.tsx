@@ -1,11 +1,11 @@
-import React, {
+import  {
   createContext,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import { generateClassName } from "../../helpers/generateClassName";
 import CloseButton from "../Buttons/CloseButton";
 import Form from "../Form/Form";
@@ -15,6 +15,11 @@ export interface ModalProps {
   onClose: () => void;
   size?: "small" | "medium" | "large";
   children?: React.ReactNode;
+}
+
+export interface CreateUpdateModalProps {
+  onClose: () => void;
+  edit?: boolean
 }
 
 interface ModalHeaderProps {
@@ -69,7 +74,6 @@ function Modal({ onClose, size = "medium", children }: ModalProps) {
   };
 
   const handleClose = () => {
-    console.log(mouseDownOutside.current);
     if (onClose && mouseDownOutside.current) onClose();
   };
 
@@ -84,7 +88,7 @@ function Modal({ onClose, size = "medium", children }: ModalProps) {
     };
   }, []);
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div
       className={ContainerClassName}
       onClick={handleClose}

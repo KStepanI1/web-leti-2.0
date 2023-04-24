@@ -13,7 +13,7 @@ function TimetableItemTime({ gap, week }: Props) {
   const StartTimeClassName = generateClassName(MAIN_CLASSNAME + "__start-time");
   const WeekNameClassName = generateClassName(MAIN_CLASSNAME + "__week-name");
 
-  const startTime = gap?.startTime.slice(0, -3);
+  const startTime = gap?.startTime;
   const weekName = week !== 3 && `${week} неделя`;
 
   return (

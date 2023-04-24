@@ -12,8 +12,8 @@ type GapModelType = Model<GapType>;
 
 const Gap = db.define<GapModelType>("gap", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  startTime: { type: DataTypes.TIME, allowNull: false },
-  endTime: { type: DataTypes.TIME },
+  startTime: { type: DataTypes.STRING, allowNull: false },
+  endTime: { type: DataTypes.STRING },
   lessonNumber: { type: DataTypes.INTEGER, allowNull: false, unique: true },
 });
 
@@ -50,6 +50,7 @@ const DEFAULT_GAPS: GapType[] = [
   },
   {
     startTime: "19:05",
+    endTime: "20:35",
     lessonNumber: 7,
   },
 ];

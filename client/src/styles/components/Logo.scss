@@ -13,6 +13,12 @@
     }
   }
 
+  &.x-small {
+    .logo__circle {
+      transform-origin: 20px center;
+    }
+  }
+
   &.small {
     .logo__circle {
       transform-origin: 30px center;
@@ -28,6 +34,12 @@
   &.large {
     .logo__circle {
       transform-origin: 120px center;
+    }
+  }
+
+  &.x-large {
+    .logo__circle {
+      transform-origin: 160px center;
     }
   }
 

@@ -7,11 +7,13 @@ import PageHeader from "../components/PageHeader";
 import { ROUTERS, ROUTERS_NAMES, WEEK_OPTIONS } from "../utils/constants";
 import PendingWrapper from "../components/PendingWrapper";
 import SwitchButton from "../components/Buttons/SwitchButton";
+import TimtetableModal from "../components/Modals/TimtetableModal";
 
 function Timetable() {
   const { timetables, main } = useContext(StoreContext);
   const ClassName = generateClassName("timetable-page");
   const ContentClassName = generateClassName("timetable-page__content");
+  const [showTimetableModal, setShowTimetableModal] = useState(false)
 
   const currentWeek = main.settings?.week;
   const [week, setWeek] = useState(currentWeek);
@@ -25,10 +27,12 @@ function Timetable() {
   }, [week]);
 
   return (
-    <div className={ClassName}>
+    <>
+  <div className={ClassName}>
       <PageHeader
         title={ROUTERS_NAMES[ROUTERS.PATH_TIMETABLE]}
         justify="space-between"
+        onPlusClick={() => setShowTimetableModal(true)}
       >
         <SwitchButton
           value={
@@ -50,6 +54,9 @@ function Timetable() {
         </div>
       </PendingWrapper>
     </div>
+    {showTimetableModal && <TimtetableModal edit={false} onClose={() => setShowTimetableModal(false)} />}
+    </>
+    
   );
 }
 

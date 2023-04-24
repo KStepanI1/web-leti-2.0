@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-type IconName = "Close" | "EyeOpened" | "EyeClosed" | "Magnifier" | "Setting";
+type IconName = "Close" | "EyeOpened" | "EyeClosed" | "Magnifier" | "Setting" | "Plus";
 
 export interface IconProps {
   name: IconName;
@@ -131,6 +131,13 @@ function Icon({ name, color = "#B8C1CC" }: IconProps) {
             />
           </svg>
         );
+       case 'Plus':
+                return (
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.125 10H16.875" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M10 3.125V16.875" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                )
       case "Setting":
         return (
           <svg

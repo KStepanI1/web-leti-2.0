@@ -10,7 +10,7 @@ import { Gap } from "../models/Gap";
 import { Lesson } from "../models/Lesson";
 import { IncludeOptions, Order } from "sequelize";
 import { Teacher } from "../models/Teacher";
-import { LessonType } from "../models/LessonTypes";
+import { LessonType } from "../models/LessonType";
 import { Settings } from "../models/Settings";
 
 const INCLUDE: { include: IncludeOptions[] } = {

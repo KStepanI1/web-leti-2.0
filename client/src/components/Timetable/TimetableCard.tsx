@@ -25,9 +25,9 @@ function TimetableCard({ dayItems, weekday }: Props) {
 
   const lessonsCount = dayItems.length;
   const startTime =
-    lessonsCount !== 0 && dayItems[0]?.gap?.startTime.slice(0, -3);
+    lessonsCount !== 0 && dayItems[0]?.gap?.startTime;
   const endTime =
-    lessonsCount !== 0 && dayItems[lessonsCount - 1]?.gap?.endTime.slice(0, -3);
+    lessonsCount !== 0 && dayItems[lessonsCount - 1]?.gap?.endTime;
   const fromTo = `с ${startTime} до ${endTime}`;
 
   const hint = `${pluralize(lessonsCount, "пара", "пары", "пар")} ${

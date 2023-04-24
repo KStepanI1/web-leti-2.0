@@ -5,7 +5,6 @@ import { ROUTERS, ROUTERS_NAMES } from "../utils/constants";
 import TimetableCard from "../components/Timetable/TimetableCard";
 import { observer } from "mobx-react-lite";
 import PendingWrapper from "../components/PendingWrapper";
-import Logo from "../components/Logo";
 // type Props = {}
 
 // {}: Props
@@ -24,7 +23,6 @@ function Home() {
   return (
     <div>
       <PageHeader title={ROUTERS_NAMES[ROUTERS.PATH_HOME]} />
-      <Logo size="large" strokeWidth={10} loader />
       <PendingWrapper data={nearest}>
         <div>
           {nearest?.today && (

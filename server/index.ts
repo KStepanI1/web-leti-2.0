@@ -5,18 +5,19 @@ import { initDbDefaultValues, initDbConnections } from "./models/_index";
 import cors from "cors";
 import router from "./routers/_index";
 import { WeekNumberService } from "./service/weekNumberService";
+import ErrorHandlerMiddleware from './middleware/ErrorHandlerMiddleware'
 
 const { PORT, CLIENT_HOST, CLIENT_PORT, CLIENT_PROTOCOL } = config;
 
 const app = express();
 
-function appErrorCallback() {
+function appStartedCallback() {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
 }
 
 async function startDb() {
-  initDbConnections();
   await db.authenticate();
+  initDbConnections();
   await db.sync({ alter: true });
   initDbDefaultValues();
 }
@@ -34,13 +35,13 @@ async function start() {
     app.use(
       cors({
         credentials: true,
-        origin: `${CLIENT_PROTOCOL}://${CLIENT_HOST}:${CLIENT_PORT}`,
+        origin: [`${CLIENT_PROTOCOL}://${CLIENT_HOST}:${CLIENT_PORT}`, `${CLIENT_PROTOCOL}://localhost`],
       })
     );
     app.use(express.json());
     app.use("/api", router);
-    // app.use(ErrorHandlerMiddleware);
-    app.listen(PORT, appErrorCallback);
+    app.use(ErrorHandlerMiddleware);
+    app.listen(PORT, appStartedCallback);
 
     await onServerStarting();
   } catch (err) {

@@ -17,7 +17,7 @@ function Header() {
   return (
     <>
       <header className={ClassName}>
-        <Logo size="small" strokeWidth={2} />
+        <Logo size="x-small" strokeWidth={2} />
         <DayInfo />
         <Button
           variant="transparent-icon"

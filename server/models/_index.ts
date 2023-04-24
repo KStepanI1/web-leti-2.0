@@ -6,7 +6,8 @@ import { Timetable } from "./Timetable";
 import { Teacher } from "./Teacher";
 import { Role } from "./Role";
 import { Token } from "./Token";
-import { DEFAULT_LESSONTYPES, LessonType } from "./LessonTypes";
+import { DEFAULT_LESSONTYPES, LessonType } from "./LessonType";
+import { DEFAULT_SETTINGS, Settings } from "./Settings";
 
 function initDbConnections() {
   Role.belongsTo(User);
@@ -37,6 +38,8 @@ async function initDbDefaultValues() {
   DEFAULT_LESSONTYPES.forEach((dLessonType) =>
     LessonType.findOrCreate({ where: dLessonType })
   );
+
+  Settings.findOrCreate({ where: DEFAULT_SETTINGS })
 }
 
 export { initDbDefaultValues, initDbConnections };

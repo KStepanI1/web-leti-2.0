@@ -1,3 +1,5 @@
+import Logo from "./Logo";
+
 const Loader = ({
   size = "medium",
   variant = "component",
@@ -7,7 +9,7 @@ const Loader = ({
 }) => {
   return (
     <div className={`loader loader_${variant}`}>
-      <div className={`spiner-${size}`} />
+      <Logo size={size} loader />
     </div>
   );
 };

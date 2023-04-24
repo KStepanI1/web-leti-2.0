@@ -13,4 +13,8 @@ const Settings = db.define<SettingsModelType>("settings", {
   week: { type: DataTypes.INTEGER },
 });
 
-export { Settings };
+const DEFAULT_SETTINGS: SettingsType = {
+  week: 1
+}
+
+export { Settings, DEFAULT_SETTINGS };

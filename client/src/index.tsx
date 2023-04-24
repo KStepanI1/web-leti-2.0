@@ -1,9 +1,11 @@
-import React, { createContext } from "react";
+import { createContext, Suspense, lazy, StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/_index.scss";
-import App from "./App/App";
 import { BrowserRouter } from "react-router-dom";
 import Store from "./store/_index";
+import { Loader } from "./components/Loader";
+
+const App = lazy(() => import("./App/App"))
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,11 +14,13 @@ const root = ReactDOM.createRoot(
 export const StoreContext = createContext<typeof Store>(Store);
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <BrowserRouter>
       <StoreContext.Provider value={Store}>
-        <App />
+        <Suspense fallback={<Loader size="medium" />}>
+          <App />
+        </Suspense>   
       </StoreContext.Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </StrictMode>
 );
