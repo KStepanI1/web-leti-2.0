@@ -1,0 +1,59 @@
+.logo {
+  cursor: pointer;
+  position: relative;
+
+  &.loader {
+    cursor: default;
+
+    .logo__circle {
+      animation: circle-animate 3s ease-in-out infinite;
+      -webkit-animation: circle-animate 3s ease-in-out infinite;
+      -o-animation: circle-animate 3s ease-in-out infinite;
+      -moz-animation: circle-animate 3s ease-in-out infinite;
+    }
+  }
+
+  &.small {
+    .logo__circle {
+      transform-origin: 30px center;
+    }
+  }
+
+  &.medium {
+    .logo__circle {
+      transform-origin: 60px center;
+    }
+  }
+
+  &.large {
+    .logo__circle {
+      transform-origin: 120px center;
+    }
+  }
+
+  &__text {
+    fill: currentColor;
+  }
+
+  &__circle {
+    stroke: currentColor;
+  }
+}
+
+@keyframes circle-animate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  40% {
+    transform: rotate(360deg);
+  }
+
+  80% {
+    transform: rotate(720deg);
+  }
+
+  100% {
+    transform: rotate(720deg);
+  }
+}

@@ -1,5 +1,5 @@
 import * as express from "express";
-import { User, UserModelType } from "../models/User";
+import { UserModelType } from "../models/User";
 
 type LoginResponseType = express.Response<UserModelType>;
 

@@ -8,17 +8,35 @@
   --gray-30: #dfe1e8;
   --gray-40: #bec3d0;
 
-  --blue-10: #eef7ff;
-  --blue-20: #77a8d0;
-  --blue-30: #0057b6;
+  --primary-10: #eef7ff;
+  --primary-20: #77a8d0;
+  --primary-30: #0057b6;
+
+  --green-l: #effbf1;
+  --green: #2dca46;
+
+  --red-80: #f69393;
+  --red-100: #f15e5e;
 
   // APP
   --background-color: #f5f5f5;
   --black-text-color: var(--dark-blue);
   --gray-text-color: var(--dark-gray);
 
+  // BUTTON
+  --btn-bg: var(--primary-20);
+  --btn-txt: var(--white);
+  --btn-hover: #4180b5;
+  --btn-active: #2369a3;
+  --btn-disabled-bg: #9195a0;
+  --btn-disabled-txt: var(--gray-30);
+
   // HEADER
   --header-bg: var(--white);
+
+  // MODAL
+  --modal-container-bg: rgba(0, 0, 0, 0.3);
+  --modal-bg: var(--white);
 
   // NAVIGATION
   --nav-bg: var(--white);
@@ -26,9 +44,13 @@
   // NAV ITEM
   --nav-i-txt: var(--gray-text-color);
   --nav-i-hover: var(--black-text-color);
-  --nav-i-active-bg: var(--blue-10);
-  --nav-i-actv-txt: var(--blue-30);
+  --nav-i-active-bg: var(--primary-10);
+  --nav-i-actv-txt: var(--primary-30);
 
   // LESSON TYPE
-  --lec-bg: var(--blue-30);
+  --lec-bg: var(--primary-20);
+  --prac-bg: var(--green);
+
+  // LOADER
+  --loader-color: var(--primary-20);
 }

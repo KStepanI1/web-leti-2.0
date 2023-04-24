@@ -8,7 +8,7 @@
     background-color: var(--lec-bg);
   }
 
-  .prac-type {
-    background-color: #000000;
+  &.prac-type {
+    background-color: var(--prac-bg);
   }
 }

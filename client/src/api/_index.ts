@@ -4,6 +4,7 @@ import {
 } from "./../../node_modules/axios/index.d";
 import axios from "axios";
 import config from "../utils/config";
+import { Toast } from "../components/Toast";
 
 class Api {
   #abortController: AbortController;
@@ -17,6 +18,25 @@ class Api {
       withCredentials: true,
       baseURL: BASE_URL,
     });
+
+    this.#api.interceptors.request.use((req) => {
+      return req;
+    });
+
+    this.#api.interceptors.response.use(
+      (res) => {
+        return res;
+      },
+      (err) => {
+        if (err.code === "ERR_CANCELED") return err;
+
+        const defaultMessage = "Произошла непредвиденная ошибка";
+
+        Toast({ type: "error", message: err.message || defaultMessage });
+
+        return err;
+      }
+    );
   }
 
   #onError(err: Error, callback?: (err: Error) => void) {
@@ -67,6 +87,20 @@ class Api {
       const res = await this.#api.get<R>(path, {
         signal: this.#abortController.signal,
       });
+      return this.#onComplete(res, onComplete);
+    } catch (err) {
+      return this.#onError(err as Error, onError);
+    }
+  }
+
+  async updatePut<T, R>({
+    path,
+    body,
+    onComplete,
+    onError,
+  }: ApiCreatePropperties<T, R>): ApiResponse<R> {
+    try {
+      const res = await this.#api.put<R>(path, body);
       return this.#onComplete(res, onComplete);
     } catch (err) {
       return this.#onError(err as Error, onError);

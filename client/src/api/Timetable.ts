@@ -2,6 +2,7 @@ import {
   ITimetable,
   ITimetableByWeeks,
   ITimetableExpanded,
+  ITimetableNearest,
 } from "../types/ITimetable";
 import {
   Api,
@@ -59,6 +60,10 @@ class TimetableApi extends Api {
   }: TimetableApiGetOneType): ApiResponse<ITimetableExpanded> {
     return this.read({ path: `/timetable/${id}`, onComplete, onError });
   }
+
+  async getNearest({ onComplete, onError }: TimetableApiGetNearestType) {
+    return this.read({ path: "/timetable/nearest", onComplete, onError });
+  }
 }
 
 type TimetableApiCreateType = ApiWithoutPath<
@@ -72,6 +77,10 @@ type TimetableApiByWeeksType = ApiWithoutPath<
 type TimetableApiGetAllType = ApiWithoutPath<
   ApiPropperties<ITimetableExpanded[]>
 > & { filter?: { weekdayId: number } };
+
+type TimetableApiGetNearestType = ApiWithoutPath<
+  ApiPropperties<ITimetableNearest>
+>;
 
 type TimetableApiGetOneType = ApiWithoutPath<
   ApiPropperties<ITimetableExpanded>

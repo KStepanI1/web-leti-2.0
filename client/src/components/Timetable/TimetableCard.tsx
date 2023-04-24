@@ -17,14 +17,17 @@ function TimetableCard({ dayItems, weekday }: Props) {
   const TitleClassName = generateClassName(MAIN_CLASSNAME + "__weekday");
   const ContentClassName = generateClassName(MAIN_CLASSNAME + "__content");
 
-  const isToday = weekday.id % 6 === new Date().getDay();
-  const weekdayName = `${weekday.name} ${isToday ? "(Сегодня)" : ""}`;
+  const currentDay = new Date().getDay();
+  const isToday = weekday.id % 7 === currentDay;
+  const isTomorow = weekday.id % 7 === (currentDay + 1) % 7;
+  const nameHint = isToday ? "(Сегодня)" : isTomorow ? "(Завтра)" : "";
+  const weekdayName = `${weekday.name} ${nameHint}`;
 
   const lessonsCount = dayItems.length;
   const startTime =
-    lessonsCount !== 0 && dayItems[0].gap?.startTime.slice(0, -3);
+    lessonsCount !== 0 && dayItems[0]?.gap?.startTime.slice(0, -3);
   const endTime =
-    lessonsCount !== 0 && dayItems[lessonsCount - 1].gap?.endTime.slice(0, -3);
+    lessonsCount !== 0 && dayItems[lessonsCount - 1]?.gap?.endTime.slice(0, -3);
   const fromTo = `с ${startTime} до ${endTime}`;
 
   const hint = `${pluralize(lessonsCount, "пара", "пары", "пар")} ${
@@ -43,7 +46,7 @@ function TimetableCard({ dayItems, weekday }: Props) {
     <div className={ClassName}>
       <div className={TitleClassName}>
         <h4>{weekdayName}</h4>
-        <h6 className="hint">{hint}</h6>
+        <small className="hint">{hint}</small>
       </div>
 
       {Items && <div className={ContentClassName}>{Items}</div>}

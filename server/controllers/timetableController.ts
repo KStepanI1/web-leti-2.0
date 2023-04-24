@@ -11,6 +11,7 @@ import { Lesson } from "../models/Lesson";
 import { IncludeOptions, Order } from "sequelize";
 import { Teacher } from "../models/Teacher";
 import { LessonType } from "../models/LessonTypes";
+import { Settings } from "../models/Settings";
 
 const INCLUDE: { include: IncludeOptions[] } = {
   include: [
@@ -141,6 +142,50 @@ class TimetableController {
 
       return res.json(resArray);
     } catch (err) {
+      next(ApiError.internal());
+    }
+  }
+
+  async getNearest(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const settings = await Settings.findOne({ where: { id: 1 } });
+
+      if (!settings) {
+        return next(ApiError.notFound("Не удалось получить четность недели"));
+      }
+
+      const weekNumber = settings.dataValues.week;
+
+      const currentDay = new Date().getDay();
+      const today = currentDay;
+      const tomorow = (currentDay + 1) % 7;
+
+      const todayTimetable = await Timetable.findAll({
+        where: { week: [weekNumber, 3], weekdayId: today === 0 ? 7 : today },
+        ...INCLUDE,
+      });
+      const tomorowTimetable = await Timetable.findAll({
+        where: { week: [weekNumber, 3], weekdayId: tomorow },
+        ...INCLUDE,
+      });
+
+      const todayWeekday = await Weekday.findOne({ where: { number: today } });
+      const tomorowWeekDay = await Weekday.findOne({
+        where: { number: tomorow },
+      });
+
+      return res.status(200).json({
+        today: { timetables: todayTimetable || [], weekday: todayWeekday },
+        tomorow: {
+          timetables: tomorowTimetable || [],
+          weekday: tomorowWeekDay,
+        },
+      });
+    } catch {
       next(ApiError.internal());
     }
   }

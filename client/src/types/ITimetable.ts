@@ -18,7 +18,14 @@ export interface ITimetableExpanded extends ITimetable {
   gap?: IGap;
 }
 
-export type ITimetableByWeeks = {
+export type ITimetableByWeeks = TimetableForWeekDay[];
+
+export type ITimetableNearest = {
+  today: TimetableForWeekDay;
+  tomorow: TimetableForWeekDay;
+};
+
+type TimetableForWeekDay = {
   weekday: IWeekday;
   timetables: ITimetableExpanded[];
-}[];
+};

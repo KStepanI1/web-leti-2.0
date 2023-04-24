@@ -5,18 +5,33 @@ import { ToastContainer } from "react-toastify";
 import { ROUTERS } from "../utils/constants";
 
 import Layout from "../pages/Layout";
-import { useMemo } from "react";
+import { Suspense, useContext, useEffect, useMemo } from "react";
 import { AUTH_ROUTERS, PUBLIC_ROUTERS } from "../roters";
 import { RequireAdmin } from "./RequireAdmin";
-import { observer } from "mobx-react-lite";
+import { StoreContext } from "..";
+import { Loader } from "../components/Loader";
 
 function App() {
+  const { main } = useContext(StoreContext);
+
+  useEffect(() => {
+    main.updateSettings();
+
+    return () => {
+      main.cancelUpdates();
+    };
+  }, []);
+
   const PUBLIC = useMemo(() => {
     return PUBLIC_ROUTERS.map(({ index, path, Component }) => (
       <Route
         key={`router_${path}`}
         index={index}
-        element={<Component />}
+        element={
+          <Suspense fallback={<Loader size="medium" />}>
+            <Component />
+          </Suspense>
+        }
         path={path}
       />
     ));
@@ -28,7 +43,9 @@ function App() {
         key={`router_${path}`}
         element={
           <RequireAdmin>
-            <Component />
+            <Suspense fallback={<Loader size="medium" />}>
+              <Component />
+            </Suspense>
           </RequireAdmin>
         }
         path={path}
@@ -50,4 +67,4 @@ function App() {
   );
 }
 
-export default observer(App);
+export default App;

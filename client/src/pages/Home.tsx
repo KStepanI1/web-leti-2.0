@@ -1,11 +1,48 @@
-
-
+import { useContext, useEffect } from "react";
+import { StoreContext } from "..";
+import PageHeader from "../components/PageHeader";
+import { ROUTERS, ROUTERS_NAMES } from "../utils/constants";
+import TimetableCard from "../components/Timetable/TimetableCard";
+import { observer } from "mobx-react-lite";
+import PendingWrapper from "../components/PendingWrapper";
+import Logo from "../components/Logo";
 // type Props = {}
+
 // {}: Props
 function Home() {
+  const { timetables } = useContext(StoreContext);
+  const nearest = timetables.nearest;
+
+  useEffect(() => {
+    timetables.updateNearest();
+
+    return () => {
+      timetables.cancelUpdates();
+    };
+  }, []);
+
   return (
-    <div>Home</div>
-  )
+    <div>
+      <PageHeader title={ROUTERS_NAMES[ROUTERS.PATH_HOME]} />
+      <Logo size="large" strokeWidth={10} loader />
+      <PendingWrapper data={nearest}>
+        <div>
+          {nearest?.today && (
+            <TimetableCard
+              dayItems={nearest.today.timetables}
+              weekday={nearest.today.weekday}
+            />
+          )}
+          {nearest?.tomorow && (
+            <TimetableCard
+              dayItems={nearest.tomorow.timetables}
+              weekday={nearest.tomorow.weekday}
+            />
+          )}
+        </div>
+      </PendingWrapper>
+    </div>
+  );
 }
 
-export default Home
+export default observer(Home);

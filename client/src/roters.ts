@@ -1,10 +1,16 @@
-import Home from "./pages/Home";
-import Timetable from "./pages/Timetable";
+import React from "react";
 import { ROUTERS } from "./utils/constants";
+
+const Home = React.lazy(() => import("./pages/Home"));
+const Timetable = React.lazy(() => import("./pages/Timetable"));
 
 type RouterType = {
   path: string;
-  Component: () => JSX.Element;
+  Component: React.LazyExoticComponent<
+    (() => JSX.Element) & {
+      displayName: string;
+    }
+  >;
   index?: boolean;
 };
 
