@@ -1,11 +1,27 @@
 .header {
-  height: 4rem;
+  height: var(--header-height);
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   min-width: 100%;
   padding: 1rem;
   justify-content: space-between;
   background-color: var(--header-bg);
-  box-shadow: var(--header-bsh);
+  border-bottom: 2px solid var(--primary-30);
+  z-index: 10;
+  transition: 0.5s;
+  transform: translate(0);
+
+  &__left-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &.--hidden {
+    transform: translateY(-100%);
+  }
 }

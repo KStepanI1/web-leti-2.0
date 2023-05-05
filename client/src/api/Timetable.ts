@@ -67,7 +67,7 @@ class TimetableApi extends Api {
 }
 
 type TimetableApiCreateType = ApiWithoutPath<
-  ApiCreatePropperties<ITimetable, ITimetableExpanded>
+  ApiCreatePropperties<Omit<ITimetable, 'id'>, ITimetableExpanded>
 >;
 
 type TimetableApiByWeeksType = ApiWithoutPath<

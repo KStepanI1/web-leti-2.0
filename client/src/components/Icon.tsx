@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-type IconName = "Close" | "EyeOpened" | "EyeClosed" | "Magnifier" | "Setting" | "Plus";
+type IconName = "Close" | "EyeOpened" | "EyeClosed" | "Magnifier" | "Setting" | "Plus" | "ArrowRight" | "ArrowLeft" | "ArrowDown" | "ArrowUp";
 
 export interface IconProps {
   name: IconName;
@@ -10,6 +10,30 @@ export interface IconProps {
 function Icon({ name, color = "#B8C1CC" }: IconProps) {
   const svg = useMemo(() => {
     switch (name) {
+      case "ArrowLeft":
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 7L10 12L15 17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
+      case "ArrowRight":
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 7L15 12L10 17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
+      case "ArrowDown":
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 10L12 15L17 10" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
+      case "ArrowUp":
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 15L12 10L7 15" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
       case "Close":
         return (
           <svg
@@ -159,7 +183,7 @@ function Icon({ name, color = "#B8C1CC" }: IconProps) {
       default:
         return <svg></svg>;
     }
-  }, []);
+  }, [name, color]);
 
   return svg;
 }

@@ -1,19 +1,34 @@
 import { IWeekday } from "../types/IWeekday";
 
-const PATH_HOME = "/";
-const PATH_TIMETABLE = "/timetable";
-const PATH_LOGIN = "/login";
+const HOME = "/";
+const TIMETABLE = "/timetable";
+const LOGIN = "/login";
+const ADMINISTRATION = "/administration";
+const LESSONS = "/lessons";
+const TEACHERS = "/teachers";
+
+const ADMINISTRATION_LESSONS = ADMINISTRATION + LESSONS;
+const ADMINISTRATION_TIMETABLE = ADMINISTRATION + TIMETABLE;
+const ADMINISTRATION_TEACHERS = ADMINISTRATION + TEACHERS;
 
 const ROUTERS = {
-  PATH_HOME,
-  PATH_TIMETABLE,
-  PATH_LOGIN,
+  HOME,
+  TIMETABLE,
+  LOGIN,
+  ADMINISTRATION,
+  ADMINISTRATION_TIMETABLE,
+  ADMINISTRATION_LESSONS,
+  ADMINISTRATION_TEACHERS,
 } as const;
 
 const ROUTERS_NAMES = {
-  [PATH_HOME]: "Главная",
-  [PATH_TIMETABLE]: "Расписание",
-  [PATH_LOGIN]: "Вход в систему",
+  [HOME]: "Главная",
+  [TIMETABLE]: "Расписание",
+  [LOGIN]: "Вход в систему",
+  [ADMINISTRATION]: "Администрирование",
+  [ADMINISTRATION_TIMETABLE]: "Расписание",
+  [ADMINISTRATION_LESSONS]: "Предметы",
+  [ADMINISTRATION_TEACHERS]: "Преподаватели",
 };
 
 const SUPER_ROLE = "Super";
@@ -41,19 +56,19 @@ const WEEKDAYS: IWeekday[] = [
   {
     id: 1,
     name: "Понедельник",
-    short: "Пн.",
+    short: "Пн",
     number: 1,
   },
   {
     id: 2,
     name: "Вторник",
-    short: "Вт.",
+    short: "Вт",
     number: 2,
   },
   {
     id: 3,
     name: "Среда",
-    short: "Ср.",
+    short: "Ср",
     number: 3,
   },
   {
@@ -65,19 +80,19 @@ const WEEKDAYS: IWeekday[] = [
   {
     id: 5,
     name: "Пятница",
-    short: "Пт.",
+    short: "Пт",
     number: 5,
   },
   {
     id: 6,
     name: "Суббота",
-    short: "Сб.",
+    short: "Сб",
     number: 6,
   },
   {
     id: 7,
     name: "Воскресенье",
-    short: "Вск.",
+    short: "Вс",
     number: 0,
   },
 ];

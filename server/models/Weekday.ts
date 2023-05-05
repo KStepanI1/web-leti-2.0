@@ -60,7 +60,7 @@ const DEFAULT_WEEKDAYS: WeekdayType[] = [
     name: "Воскресенье",
     short: "Вск.",
     engShort: "Sun",
-    number: 0,
+    number: 7,
   },
 ];
 

@@ -3,7 +3,7 @@ import { generateClassName } from "../../helpers/generateClassName";
 
 type Props = {
   gap?: IGap;
-  week: number;
+  week?: number;
 };
 
 const MAIN_CLASSNAME = "t-item-time";

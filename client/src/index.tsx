@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(
 export const StoreContext = createContext<typeof Store>(Store);
 
 root.render(
-  <StrictMode>
-    <BrowserRouter>
-      <StoreContext.Provider value={Store}>
-        <Suspense fallback={<Loader size="medium" />}>
-          <App />
-        </Suspense>   
-      </StoreContext.Provider>
-    </BrowserRouter>
-  </StrictMode>
+    <StrictMode>
+      <BrowserRouter>
+        <StoreContext.Provider value={Store}>
+          <Suspense fallback={<Loader size="medium" logo />}>
+            <App />
+          </Suspense>
+        </StoreContext.Provider>
+      </BrowserRouter>
+    </StrictMode>
 );

@@ -1,7 +1,10 @@
 .page-header {
   display: flex;
-  justify-content: space-between;
-  gap: 3rem;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  min-height: 2.5rem;
 
   &__children {
     display: flex;

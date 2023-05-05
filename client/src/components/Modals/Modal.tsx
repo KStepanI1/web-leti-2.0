@@ -28,6 +28,7 @@ interface ModalHeaderProps {
 
 interface ModalFormProps {
   children?: React.ReactNode;
+  onSubmit?: React.FormEventHandler
 }
 
 interface ModalBodyProps {
@@ -36,7 +37,7 @@ interface ModalBodyProps {
 
 interface ModalFooterProps {
   children?: React.ReactNode;
-  onConfirm?: VoidFunction;
+  onConfirm?: () => Promise<unknown>;
   confirmBtnName?: string;
   cancelButtonName?: string;
   showConfirmButton?: boolean;
@@ -44,6 +45,7 @@ interface ModalFooterProps {
   confrimDisabled?: boolean;
   confirmPromise?: Promise<object>;
   confirmPending?: boolean;
+  type?: 'submit' | 'default'
 }
 
 type ModalCloseFunction = VoidFunction;
@@ -67,7 +69,7 @@ function Modal({ onClose, size = "medium", children }: ModalProps) {
   const ContainerClassName = generateClassName(MAIN_CLASSNAME + "-container");
   const mouseDownOutside = useRef(false);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") {
       onClose();
     }
@@ -77,22 +79,13 @@ function Modal({ onClose, size = "medium", children }: ModalProps) {
     if (onClose && mouseDownOutside.current) onClose();
   };
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "visible";
-    };
-  }, []);
-
   return createPortal(
     <div
       className={ContainerClassName}
       onClick={handleClose}
       onMouseDown={() => (mouseDownOutside.current = true)}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
       <div
         className={ClassName}
@@ -121,10 +114,10 @@ Modal.Header = function MHeader({ children }: ModalHeaderProps) {
   );
 };
 
-Modal.Form = function MForm({ children }: ModalFormProps) {
+Modal.Form = function MForm({ children, onSubmit }: ModalFormProps) {
   const ClassName = generateClassName(MAIN_CLASSNAME + "-form");
 
-  return <Form className={ClassName}>{children}</Form>;
+  return <Form onSubmit={onSubmit} className={ClassName}>{children}</Form>;
 };
 
 Modal.Body = function MBody({ children }: ModalBodyProps) {
@@ -142,13 +135,14 @@ Modal.Footer = function MFooter({
   showCancelButton = true,
   showConfirmButton = true,
   confirmPending = false,
+  type = 'default',
 }: ModalFooterProps) {
   const ClassName = generateClassName(MAIN_CLASSNAME + "-footer");
   const { onClose } = useContext(ModalContext);
   const [pending, setPending] = useState(false);
 
-  const handleConfirm = () => {
-    if (onConfirm) onConfirm();
+  const handleConfirm = async () => {
+    if (onConfirm) await onConfirm();
     onClose();
   };
 
@@ -162,11 +156,12 @@ Modal.Footer = function MFooter({
       {onClose && showCancelButton && (
         <Button onClick={onClose}>{cancelButtonName}</Button>
       )}
-      {onConfirm && showConfirmButton && (
+      {(onConfirm || type === 'submit') && showConfirmButton  && (
         <Button
+          type="submit"
           showLoader={pending}
           disabled={confrimDisabled}
-          onClick={handleConfirm}
+          onClick={type === 'default' ? handleConfirm : undefined}
         >
           {confirmBtnName}
         </Button>

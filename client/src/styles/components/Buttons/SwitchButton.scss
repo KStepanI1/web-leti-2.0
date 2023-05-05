@@ -1,13 +1,15 @@
 .switch-btn {
   display: flex;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   width: auto;
   padding: 0.1rem;
 
+  --switch-animatiaon-dur: 0.3s;
+
   &__btn {
     position: relative;
-    padding: 0.5rem;
+    padding: 0.4rem;
     background-color: transparent;
     border: none;
     outline: none;
@@ -45,41 +47,50 @@
     &:hover {
       &.inactive .switch-btn__btn {
         background-color: var(--primary-10);
+        transition: 0.1s;
       }
     }
 
     &:active {
       &.inactive .switch-btn__btn {
         background-color: var(--primary-10);
+        box-shadow: 0 0 10px var(--primary-20) inset;
+        transition: 0.1s;
       }
     }
 
     &.active {
       & .switch-btn__btn {
         color: var(--white);
+        transition: var(--switch-animatiaon-dur);
       }
 
       & .switch-btn__bg {
-        animation: onActive 0.15s;
+        animation: onActive  var(--switch-animatiaon-dur);
       }
     }
 
     &.inactive {
+      & .switch-btn__btn {
+        color: var(--black);
+        transition:  var(--switch-animatiaon-dur);
+      }
+
       & .switch-btn__bg {
         max-width: 0%;
-        animation: onInactive 0.15s;
+        animation: onInactive  var(--switch-animatiaon-dur);
       }
     }
   }
 
   &__left-btn-box {
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
   }
 
   &__right-btn-box {
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
   }
 }
 

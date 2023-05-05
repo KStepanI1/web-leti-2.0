@@ -11,7 +11,7 @@ function DayInfo() {
 
   return (
     <div>
-      {main.settings?.week} неделя, {main.weekday?.short}
+      {main.weekday?.short}, {main.settings?.week} неделя
     </div>
   );
 }

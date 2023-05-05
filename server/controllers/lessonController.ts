@@ -1,6 +1,14 @@
+import { LessonType } from "./../models/Lesson";
 import * as express from "express";
-import { Lesson, LessonModelType, LessonType } from "../models/Lesson";
 import { ApiError } from "../error/ApiError";
+import { LessonType as LessonTypeModel } from "../models/LessonType";
+import { IncludeOptions } from "sequelize";
+import { Lesson } from "../models/Lesson";
+import { LessonModelType } from "../models/Lesson";
+
+const INCLUDE: { include: IncludeOptions[] } = {
+  include: [{ model: LessonTypeModel, as: "lessontype" }],
+};
 
 class LessonController {
   async create(
@@ -32,7 +40,7 @@ class LessonController {
     try {
       const { id } = req.params;
 
-      const lesson = await Lesson.findOne({ where: { id } });
+      const lesson = await Lesson.findOne({ where: { id }, ...INCLUDE });
 
       return res.status(200).json(lesson);
     } catch (err) {
@@ -41,7 +49,7 @@ class LessonController {
   }
 
   async getAll(req: GetAllRequestType, res: GetAllResponseType) {
-    const lessons = await Lesson.findAll();
+    const lessons = await Lesson.findAll({ ...INCLUDE });
 
     return res.status(200).json(lessons);
   }

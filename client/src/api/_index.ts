@@ -115,7 +115,7 @@ class Api {
 
 export interface ApiCreatePropperties<T, R>
   extends Omit<ApiPropperties<R>, "filter"> {
-  body: T;
+  body: Omit<T, "id">;
 }
 
 export interface ApiPropperties<T> extends ApiResultCallbacks<T> {

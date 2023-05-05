@@ -1,22 +1,24 @@
+import { useContext } from "react"
 import { generateClassName } from "../helpers/generateClassName";
-import { ROUTERS, ROUTERS_NAMES } from "../utils/constants";
+import { NAVIGATION } from "../navigation";
 import NavItem from "./NavItem";
+import { StoreContext } from "..";
+import { observer } from "mobx-react-lite";
 
 // type Props = {}
 // {}: Props
 
 function Navigation() {
-  const ClassName = generateClassName("navigation");
+  const { main } = useContext(StoreContext)
+  const ClassName = generateClassName("navigation", { '--opened': main.isNavOpened });
 
   return (
     <nav className={ClassName}>
-      <NavItem to={ROUTERS.PATH_HOME} name={ROUTERS_NAMES[ROUTERS.PATH_HOME]} />
-      <NavItem
-        to={ROUTERS.PATH_TIMETABLE}
-        name={ROUTERS_NAMES[ROUTERS.PATH_TIMETABLE]}
-      />
+      {NAVIGATION.map(({ path, name, children }) => (
+        <NavItem key={path} path={path} name={name} >{children}</NavItem>
+      ))}
     </nav>
   );
 }
 
-export default Navigation;
+export default observer(Navigation);

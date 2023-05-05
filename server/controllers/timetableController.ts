@@ -31,7 +31,7 @@ const INCLUDE: { include: IncludeOptions[] } = {
   ],
 };
 
-const ORDER: { order: Order } = { order: [[Gap, "startTime"]] };
+const ORDER: { order: Order } = { order: [[Gap, "lessonNumber"]] };
 
 class TimetableController {
   async create(
@@ -130,7 +130,7 @@ class TimetableController {
         ...ORDER,
       });
 
-      const weekdays = await Weekday.findAll();
+      const weekdays = await Weekday.findAll({ order: ["number"] });
 
       const resArray = weekdays.map((weekday) => ({
         weekday: weekday,
@@ -161,8 +161,8 @@ class TimetableController {
       const weekNumber = settings.dataValues.week;
 
       const currentDay = new Date().getDay();
-      const today = currentDay;
-      const tomorow = (currentDay + 1) % 7;
+      const today = currentDay === 0 ? 7 : currentDay;
+      const tomorow = today + 1 === 8 ? 1 : today + 1;
 
       const todayTimetable = await Timetable.findAll({
         where: { week: [weekNumber, 3], weekdayId: today === 0 ? 7 : today },

@@ -1,0 +1,33 @@
+.nav-burger {
+    --nav-burger-width: 1.5rem;
+    --nav-burger-height: 1.5rem;
+    --nav-burger-line-height: 0.2rem;
+
+    width: var(--nav-burger-width);
+    height: var( --nav-burger-height);
+    position: relative;
+    padding: 0 !important;
+    
+    &__central-line, &__central-line::before, &__central-line::after {
+        display: block;
+        height: var(--nav-burger-line-height);
+        min-width: var(--nav-burger-width);
+        background-color: var(--primary-30);
+        border-radius: 0.5rem;
+    }
+
+    &__central-line::before, &__central-line::after {
+        content: "";
+        position: absolute;
+        left: 0;
+    }
+
+    &__central-line::before {
+        top: 0;
+    }
+
+    &__central-line::after {
+        bottom: 0;
+    }
+
+}

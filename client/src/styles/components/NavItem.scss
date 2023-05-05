@@ -3,15 +3,21 @@
   margin: 0.25rem 0;
 
   &__link {
-    font-size: 0.9rem;
     padding: 0.5rem 1rem;
-    border-radius: 6px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   &__link.-active {
     background-color: var(--nav-i-active-bg);
     color: var(--nav-i-actv-txt);
+    font-weight: 500;
+    border-left: 0.5rem solid var(--primary-30);
+    padding: 0.5rem 0.5rem;
+  }
+
+  &__expanded-box {
+    margin-left: 1.5rem;
   }
 }

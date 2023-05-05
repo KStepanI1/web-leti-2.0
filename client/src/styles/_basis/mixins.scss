@@ -1,0 +1,18 @@
+@mixin grouped {
+    border-radius: 0 !important;
+    border-radius: 0 !important;
+    border-left: 1px solid #e4e5e8 !important;
+    border-right: 1px solid #e4e5e8 !important;
+
+    &-start {
+        border-bottom-right-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-right: 1px solid #e4e5e8 !important;
+    }
+
+    &-end {
+        border-bottom-left-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-left: 1px solid #e4e5e8 !important;
+    }
+}

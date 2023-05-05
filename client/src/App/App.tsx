@@ -6,8 +6,7 @@ import { ROUTERS } from "../utils/constants";
 
 import Layout from "../pages/Layout";
 import { Suspense, useContext, useEffect, useMemo } from "react";
-import { AUTH_ROUTERS, PUBLIC_ROUTERS } from "../roters";
-import { RequireAdmin } from "./RequireAdmin";
+import { PRIVATE_ROUTERS, PUBLIC_ROUTERS } from "../roters";
 import { StoreContext } from "..";
 import { Loader } from "../components/Loader";
 
@@ -38,15 +37,15 @@ function App() {
   }, []);
 
   const PRIVATE = useMemo(() => {
-    return AUTH_ROUTERS.map(({ path, Component }) => (
+    return PRIVATE_ROUTERS.map(({ path, Component }) => (
       <Route
         key={`router_${path}`}
         element={
-          <RequireAdmin>
-            <Suspense fallback={<Loader size="medium" />}>
-              <Component />
-            </Suspense>
-          </RequireAdmin>
+          // <RequireAdmin>
+          <Suspense fallback={<Loader size="medium" />}>
+            <Component />
+          </Suspense>
+          // </RequireAdmin>
         }
         path={path}
       />
@@ -57,7 +56,7 @@ function App() {
     <div className="App">
       <ToastContainer />
       <Routes>
-        <Route element={<Layout />} path={ROUTERS.PATH_HOME}>
+        <Route element={<Layout />} path={ROUTERS.HOME}>
           {PUBLIC}
           {PRIVATE}
         </Route>

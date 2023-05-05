@@ -46,18 +46,18 @@ class TeacherController {
     try {
       const { id } = req.params;
 
-      const lesson = await Teacher.findOne({ where: { id } });
+      const teachers = await Teacher.findOne({ where: { id } });
 
-      return res.status(200).json(lesson);
+      return res.status(200).json(teachers);
     } catch (err) {
       next(ApiError.internal());
     }
   }
 
   async getAll(req: GetAllRequestType, res: GetAllResponseType) {
-    const lessons = await Teacher.findAll();
+    const teachers = await Teacher.findAll();
 
-    return res.status(200).json(lessons);
+    return res.status(200).json(teachers);
   }
 }
 

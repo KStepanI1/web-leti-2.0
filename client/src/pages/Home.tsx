@@ -5,6 +5,7 @@ import { ROUTERS, ROUTERS_NAMES } from "../utils/constants";
 import TimetableCard from "../components/Timetable/TimetableCard";
 import { observer } from "mobx-react-lite";
 import PendingWrapper from "../components/PendingWrapper";
+import TimetableCardsWrapper from "../components/Timetable/TimetableCardsWrapper";
 // type Props = {}
 
 // {}: Props
@@ -22,9 +23,9 @@ function Home() {
 
   return (
     <div>
-      <PageHeader title={ROUTERS_NAMES[ROUTERS.PATH_HOME]} />
+      <PageHeader title={ROUTERS_NAMES[ROUTERS.HOME]} />
       <PendingWrapper data={nearest}>
-        <div>
+        <TimetableCardsWrapper>
           {nearest?.today && (
             <TimetableCard
               dayItems={nearest.today.timetables}
@@ -37,7 +38,7 @@ function Home() {
               weekday={nearest.tomorow.weekday}
             />
           )}
-        </div>
+        </TimetableCardsWrapper>
       </PendingWrapper>
     </div>
   );

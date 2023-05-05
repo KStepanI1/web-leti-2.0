@@ -24,7 +24,7 @@ function initDbConnections() {
   LessonType.hasOne(Lesson);
 
   Lesson.belongsTo(Teacher);
-  Teacher.hasOne(Lesson);
+  Teacher.hasMany(Lesson);
 
   Token.belongsTo(User);
   User.hasOne(Token);
@@ -39,7 +39,7 @@ async function initDbDefaultValues() {
     LessonType.findOrCreate({ where: dLessonType })
   );
 
-  Settings.findOrCreate({ where: DEFAULT_SETTINGS })
+  Settings.findOrCreate({ where: DEFAULT_SETTINGS });
 }
 
 export { initDbDefaultValues, initDbConnections };

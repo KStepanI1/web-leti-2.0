@@ -5,20 +5,38 @@ import Header from "../components/Header";
 import { StoreContext } from "..";
 import { Loader } from "../components/Loader";
 import { observer } from "mobx-react-lite";
+import Calendar from "../components/Calendar";
+import { generateClassName } from "../helpers/generateClassName";
 
 // type Props = {}
 // {}: Props
+
+const MAIN_CLASSNAME = "layout";
+
 function Layout() {
   const { main } = useContext(StoreContext);
 
+  const ClassName = generateClassName(MAIN_CLASSNAME);
+  const RightBoxClassName = generateClassName(MAIN_CLASSNAME + "__right-box");
+  const OutletClassName = generateClassName(MAIN_CLASSNAME + "__outlet");
+  const ContentContainer = generateClassName(
+    MAIN_CLASSNAME + "__content-container"
+  );
+
   return (
-    <div className="layout">
+    <div className={ClassName}>
       <Header />
-      <Navigation />
+
       {/* <NavigationMobile />  */}
-      <main className="layout__outlet">
-        {main.settings ? <Outlet /> : <Loader size="medium" />}
-      </main>
+      <div className={ContentContainer}>
+        <Navigation />
+        <main className={OutletClassName}>
+          {main.settings ? <Outlet /> : <Loader size="medium" />}
+          <div className={RightBoxClassName}>
+            <Calendar />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

@@ -6,12 +6,13 @@ type Props = {
   name: string;
   children: React.ReactNode;
   required?: boolean;
+  className?: string;
 };
 
 const MAIN_CLASSNAME = "form-field";
 
-function FormField({ name, children, required }: Props) {
-  const ClassName = generateClassName(MAIN_CLASSNAME);
+function FormField({ name, children, required, className }: Props) {
+  const ClassName = generateClassName(MAIN_CLASSNAME, className);
 
   return (
     <div className={ClassName}>

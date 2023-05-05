@@ -6,20 +6,20 @@ import { ROUTERS } from "../utils/constants";
 interface LogoProps {
   loader?: boolean;
   strokeWidth?: number;
-  size: "x-small" | "small" | "medium" | "large" | 'x-large';
+  size: "x-small" | "small" | "medium" | "large" | "x-large";
 }
 
 const MAIN_CLASSNAME = "logo";
 
 const SIZES = {
-  'x-small': 20,
-  'small': 30,
-  'medium': 60,
-  'large': 120,
-  'x-large': 160
-} as const
+  "x-small": 20,
+  small: 30,
+  medium: 60,
+  large: 120,
+  "x-large": 160,
+} as const;
 
-function Logo({ loader = false, strokeWidth = 3, size = 'small' }: LogoProps) {
+function Logo({ loader = false, strokeWidth = 3, size = "small" }: LogoProps) {
   const radius = SIZES[size];
   const ClassName = generateClassName(MAIN_CLASSNAME, size, { loader });
   const TextClassName = generateClassName(MAIN_CLASSNAME + "__text");
@@ -36,9 +36,8 @@ function Logo({ loader = false, strokeWidth = 3, size = 'small' }: LogoProps) {
       fill="transparent"
       strokeWidth={strokeWidth}
       className={ClassName}
-      onClick={() => !loader && navigate(ROUTERS.PATH_HOME)}
+      onClick={() => !loader && navigate(ROUTERS.HOME)}
     >
-     
       <g
         transform={`rotate(36 ${radius} ${radius})`}
         className={MAIN_CLASSNAME + "__circle-box"}
@@ -51,13 +50,12 @@ function Logo({ loader = false, strokeWidth = 3, size = 'small' }: LogoProps) {
           strokeDasharray={2 * Math.PI * innerRadius * 0.8 + " 1000"}
         ></circle>
       </g>
-      
+
       <g>
         <text
           className={TextClassName}
           fontSize={radius}
           fontWeight={500}
-          transform={`translate 10 ${radius} ${radius}`}
           x={radius}
           y={radius}
           dominantBaseline="central"

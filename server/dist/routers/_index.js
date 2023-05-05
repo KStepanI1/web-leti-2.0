@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var userRouter_1 = __importDefault(require("./userRouter"));
+var lessonRouter_1 = __importDefault(require("./lessonRouter"));
+var timetableRouter_1 = __importDefault(require("./timetableRouter"));
+var teacherRouter_1 = __importDefault(require("./teacherRouter"));
+var settingsRouter_1 = __importDefault(require("./settingsRouter"));
+var weekdayRouter_1 = __importDefault(require("./weekdayRouter"));
+var gapRouter_1 = __importDefault(require("./gapRouter"));
+var lessonTypeRouter_1 = __importDefault(require("./lessonTypeRouter"));
+var router = (0, express_1.Router)();
+router.use("/user", userRouter_1.default);
+router.use("/lesson", lessonRouter_1.default);
+router.use("/timetable", timetableRouter_1.default);
+router.use("/teacher", teacherRouter_1.default);
+router.use("/settings", settingsRouter_1.default);
+router.use("/weekday", weekdayRouter_1.default);
+router.use("/gap", gapRouter_1.default);
+router.use("/lessonType", lessonTypeRouter_1.default);
+exports.default = router;

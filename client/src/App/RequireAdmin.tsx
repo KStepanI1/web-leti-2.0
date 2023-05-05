@@ -7,7 +7,7 @@ function RequireAdmin({ children }: { children: JSX.Element }) {
   const { auth } = useContext(StoreContext);
 
   if (!auth.isAdmin || !auth.isSuper) {
-    return <Navigate to={ROUTERS.PATH_HOME} replace />;
+    return <Navigate to={ROUTERS.HOME} replace />;
   }
 
   return children;

@@ -7,6 +7,8 @@ import { WEEKDAYS } from "../utils/constants";
 class MainStore {
   _settings: ISettings | null = null;
   _weekday: IWeekday | null = null;
+  _navOpened = true;
+  _headerVisible = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,6 +20,14 @@ class MainStore {
 
   setWeekday(newWeekday: IWeekday | null) {
     this._weekday = newWeekday;
+  }
+
+  setNavOpened(value: boolean) {
+    this._navOpened = value
+  }
+
+  setHeaderVisibility(value: boolean) {
+    this._headerVisible = value
   }
 
   async updateSettings() {
@@ -42,6 +52,14 @@ class MainStore {
 
   get weekday() {
     return this._weekday;
+  }
+
+  get isNavOpened() {
+    return this._navOpened;
+  }
+
+  get isHeaderVisible() {
+    return this._headerVisible;
   }
 }
 

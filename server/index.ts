@@ -5,7 +5,7 @@ import { initDbDefaultValues, initDbConnections } from "./models/_index";
 import cors from "cors";
 import router from "./routers/_index";
 import { WeekNumberService } from "./service/weekNumberService";
-import ErrorHandlerMiddleware from './middleware/ErrorHandlerMiddleware'
+import ErrorHandlerMiddleware from "./middleware/ErrorHandlerMiddleware";
 
 const { PORT, CLIENT_HOST, CLIENT_PORT, CLIENT_PROTOCOL } = config;
 
@@ -35,7 +35,10 @@ async function start() {
     app.use(
       cors({
         credentials: true,
-        origin: [`${CLIENT_PROTOCOL}://${CLIENT_HOST}:${CLIENT_PORT}`, `${CLIENT_PROTOCOL}://localhost`],
+        origin: [
+          `${CLIENT_PROTOCOL}://${CLIENT_HOST}:${CLIENT_PORT}`,
+          `${CLIENT_PROTOCOL}://localhost`,
+        ],
       })
     );
     app.use(express.json());

@@ -6,7 +6,7 @@ import LessonType from "./LessonType";
 type Props = {
   lesson?: ILessonExpanded;
   isRemotely: boolean;
-  audienceNumber: number;
+  audienceNumber?: string;
 };
 
 const MAIN_CLASSNAME = "t-item-lesson";
@@ -31,7 +31,7 @@ function TimetableItemLesson({ lesson, isRemotely, audienceNumber }: Props) {
         <LessonType lessonType={lesson?.lessontype} />
       </div>
 
-      <p className={TeacherNameClassName}>{lesson?.teacher.fullName}</p>
+      <p className={TeacherNameClassName}>{lesson?.teacher?.fullName}</p>
       <p className={AudienceClassName}>
         {!isRemotely ? audienceNumber : "Дистанционно"}
       </p>

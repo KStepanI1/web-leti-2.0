@@ -1,11 +1,16 @@
 @import "Header.scss";
-@import "NavItem.scss";
-@import "Navigation.scss";
-@import "Loader.scss";
-@import "PageHeader.scss";
-@import "Logo.scss";
+@import "./NavItem.scss";
+@import "./Navigation.scss";
+@import "./Loader.scss";
+@import "./PageHeader.scss";
+@import "./Logo.scss";
+@import "./Calendar.scss";
+@import "./BreadCrumbs.scss";
+@import "./NavBurger.scss";
+@import "./Popper.scss";
 
 @import "Timetable";
 @import "Modals";
 @import "Buttons";
 @import "Form";
+@import "Select";

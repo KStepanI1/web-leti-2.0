@@ -8,12 +8,12 @@ import { ROUTERS, ROUTERS_NAMES, WEEK_OPTIONS } from "../utils/constants";
 import PendingWrapper from "../components/PendingWrapper";
 import SwitchButton from "../components/Buttons/SwitchButton";
 import TimtetableModal from "../components/Modals/TimtetableModal";
+import TimetableCardsWrapper from "../components/Timetable/TimetableCardsWrapper";
 
 function Timetable() {
   const { timetables, main } = useContext(StoreContext);
   const ClassName = generateClassName("timetable-page");
-  const ContentClassName = generateClassName("timetable-page__content");
-  const [showTimetableModal, setShowTimetableModal] = useState(false)
+  const [showTimetableModal, setShowTimetableModal] = useState(false);
 
   const currentWeek = main.settings?.week;
   const [week, setWeek] = useState(currentWeek);
@@ -28,35 +28,35 @@ function Timetable() {
 
   return (
     <>
-  <div className={ClassName}>
-      <PageHeader
-        title={ROUTERS_NAMES[ROUTERS.PATH_TIMETABLE]}
-        justify="space-between"
-        onPlusClick={() => setShowTimetableModal(true)}
-      >
-        <SwitchButton
-          value={
-            WEEK_OPTIONS.find((opt) => opt.value === week) || WEEK_OPTIONS[0]
-          }
-          onChange={(e) => setWeek(e.value)}
-          options={WEEK_OPTIONS}
+      <div className={ClassName}>
+        <PageHeader title={ROUTERS_NAMES[ROUTERS.TIMETABLE]}>
+          <SwitchButton
+            value={
+              WEEK_OPTIONS.find((opt) => opt.value === week) || WEEK_OPTIONS[0]
+            }
+            onChange={(e) => setWeek(e.value)}
+            options={WEEK_OPTIONS}
+          />
+        </PageHeader>
+        <PendingWrapper data={timetables.week}>
+          <TimetableCardsWrapper>
+            {timetables.week?.map(({ weekday, timetables }) => (
+              <TimetableCard
+                key={`t-card-${weekday.id}`}
+                weekday={weekday}
+                dayItems={timetables}
+              />
+            ))}
+          </TimetableCardsWrapper>
+        </PendingWrapper>
+      </div>
+      {showTimetableModal && (
+        <TimtetableModal
+          edit={false}
+          onClose={() => setShowTimetableModal(false)}
         />
-      </PageHeader>
-      <PendingWrapper data={timetables.week}>
-        <div className={ContentClassName}>
-          {timetables.week?.map(({ weekday, timetables }) => (
-            <TimetableCard
-              key={`t-card-${weekday.id}`}
-              weekday={weekday}
-              dayItems={timetables}
-            />
-          ))}
-        </div>
-      </PendingWrapper>
-    </div>
-    {showTimetableModal && <TimtetableModal edit={false} onClose={() => setShowTimetableModal(false)} />}
+      )}
     </>
-    
   );
 }
 

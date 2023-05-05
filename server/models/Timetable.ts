@@ -5,7 +5,7 @@ export type TimetableModelType = Model<TimetableType>;
 
 export type TimetableType = {
   id?: number;
-  audienceNumber: number;
+  audienceNumber: string;
   week: number;
   isRemotely?: boolean;
   lessonId?: number;
@@ -15,7 +15,7 @@ export type TimetableType = {
 
 const Timetable = db.define<TimetableModelType>("timetable", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  audienceNumber: { type: DataTypes.INTEGER, allowNull: true },
+  audienceNumber: { type: DataTypes.STRING, allowNull: true },
   isRemotely: { type: DataTypes.BOOLEAN, defaultValue: false },
   week: { type: DataTypes.INTEGER, defaultValue: 3 },
 });
